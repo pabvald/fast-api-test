@@ -55,7 +55,7 @@ def list_users(
 
 
 @app.get(
-    "/user/{user_id}",
+    "/users/{user_id}",
     tags=["Users"],
     response_model=User,
     responses={404: {"model": Message}},
@@ -69,13 +69,13 @@ def show_user(user_id: UUID, db: Session = Depends(get_db)):
     return response
 
 
-@app.post("/user/", tags=["Users"], response_model=User)
+@app.post("/users/", tags=["Users"], response_model=User)
 def create_user(user: UserCreate = Depends(), db: Session = Depends(get_db)):
     return users.create_user(db=db, user=user)
 
 
 @app.delete(
-    "/user/{user_id}",
+    "/users/{user_id}",
     tags=["Users"],
     response_model=User,
     responses={404: {"model": Message}},
@@ -90,7 +90,7 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
 
 
 @app.put(
-    "/user/", tags=["Users"], response_model=User, responses={404: {"model": Message}}
+    "/users/", tags=["Users"], response_model=User, responses={404: {"model": Message}}
 )
 def update_user(user: UserUpdate = Depends(), db: Session = Depends(get_db)):
     db_user = users.get_user(db=db, user_id=user.id)
