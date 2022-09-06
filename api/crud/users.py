@@ -27,7 +27,6 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     
 
 def create_user(db: Session, user: UserCreate):
-    print(user)
     # create user
     db_user = UserModel(name=user.name, favorite_tv_show=user.favorite_tv_show)
     # save to db

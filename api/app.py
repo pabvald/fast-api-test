@@ -59,7 +59,4 @@ def show_user(user_id: UUID, db: Session = Depends(get_db)):
 
 @app.post("/user/", response_model=User)
 def create_user(user: UserCreate = Depends(), db: Session = Depends(get_db)):
-    db_user = users.get_user_by_name(db=db, name=user.name)
-    if db_user: 
-        raise HTTPException(status_code=402, detail="A User with the same name already exists")
     return users.create_user(db=db, user=user)
