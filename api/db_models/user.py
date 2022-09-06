@@ -23,5 +23,5 @@ class UserModel(Base):
     __tablename__ = "users"
 
     id = Column(GUID, primary_key=True, default=GUID_DEFAULT_SQLITE)
-    name = Column(String(50), unique=True, index=True)
+    name = Column(String(50))
     favorite_tv_show = Column(Enum(TVShow))
