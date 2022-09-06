@@ -47,9 +47,11 @@ def list_users(
     favorite_tv_show: Optional[TVShow] = None, db: Session = Depends(get_db)
 ):
     if favorite_tv_show:
-        return users.get_user_by_tv_show(db, favorite_tv_show)
+        response = users.get_users_by_tv_show(db, favorite_tv_show)
     else:
-        return users.get_users(db)
+        response = users.get_users(db)
+
+    return response
 
 
 @app.get(
@@ -81,7 +83,7 @@ def create_user(user: UserCreate = Depends(), db: Session = Depends(get_db)):
 def delete_user(user_id: UUID, db: Session = Depends(get_db)):
     db_user = users.get_user(db=db, user_id=user_id)
     if db_user:
-        response = users.delete_user(db=db, user_id=user_id)
+        response = users.delete_user(db=db, db_user=db_user)
     else:
         response = JSONResponse(status_code=404, content={"message": "User not found"})
     return response

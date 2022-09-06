@@ -18,12 +18,18 @@ def get_user_by_name(db: Session, name: str):
     return db.query(UserModel).filter(UserModel.name == name).first()
 
 
-def get_user_by_tv_show(db: Session, tv_show: TVShow):
-    return db.query(UserModel).filter(UserModel.favorite_tv_show == tv_show).all()
-
-
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(UserModel).offset(skip).limit(limit).all()
+
+
+def get_users_by_tv_show(db: Session, tv_show: TVShow, skip: int = 0, limit: int = 100):
+    return (
+        db.query(UserModel)
+        .filter(UserModel.favorite_tv_show == tv_show)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 def create_user(db: Session, user: UserCreate):
