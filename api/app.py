@@ -1,19 +1,22 @@
-# Base Dependencies 
+# Base Dependencies
 # -----------------
-from typing import Optional 
+from re import I
+from typing import Optional
 
 # FastAPI Dependencies
 # --------------------
 from uuid import UUID
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 
 # 3rd-party Dependencies
 # ----------------------
-
+from sqlalchemy.orm import Session
 
 # Local Dependencies
 # ------------------
-from models.user import UserBase
+from crud import users
+from database import engine, Base, get_db
+from models.user import UserCreate, UserUpdate, User
 from models.tv_show import TVShow
 
 
@@ -24,22 +27,39 @@ tags_metadata = [
     }
 ]
 
+# create DB tables
+Base.metadata.create_all(bind=engine)
 
+# create app
 app = FastAPI(openapi_tags=tags_metadata)
 
 
-# Root 
+# Root
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
 
 # Users
-@app.get("/users/", tags=['Users'])
-def list_users(favorite_tv_show: Optional[str] = None):
-    return [("User 1", TVShow("breaking_bad")), ("User 2", TVShow("breaking_bad"))]
+@app.get("/users/", tags=['Users'], response_model=list[User])
+def list_users(favorite_tv_show: Optional[TVShow] = None, db: Session = Depends(get_db)):
+    if favorite_tv_show:
+        return users.get_user_by_tv_show(db, favorite_tv_show)
+    else:
+        return users.get_users(db)
 
 
-@app.get("/users/{user_id}", tags=['Users'])
-def show_user(user_id: UUID):
-    return ("User", TVShow("the_wire"))
+@app.get("/user/{user_id}", tags=['Users'], response_model=User)
+def show_user(user_id: UUID, db: Session = Depends(get_db)):
+    db_user = users.get_user(db=db, user_id=user_id)    
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+
+
+@app.post("/user/", response_model=User)
+def create_user(user: UserCreate = Depends(), db: Session = Depends(get_db)):
+    db_user = users.get_user_by_name(db=db, name=user.name)
+    if db_user: 
+        raise HTTPException(status_code=402, detail="A User with the same name already exists")
+    return users.create_user(db=db, user=user)
