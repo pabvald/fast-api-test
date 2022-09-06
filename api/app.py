@@ -1,6 +1,5 @@
 # Base Dependencies
 # -----------------
-from re import I
 from typing import Optional
 
 # FastAPI Dependencies
@@ -34,22 +33,24 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(openapi_tags=tags_metadata)
 
 
-# Root
+# -- Root --
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
 
-# Users
-@app.get("/users/", tags=['Users'], response_model=list[User])
-def list_users(favorite_tv_show: Optional[TVShow] = None, db: Session = Depends(get_db)):
+# -- Users --
+@app.get("/users/", tags=["Users"], response_model=list[User])
+def list_users(
+    favorite_tv_show: Optional[TVShow] = None, db: Session = Depends(get_db)
+):
     if favorite_tv_show:
         return users.get_user_by_tv_show(db, favorite_tv_show)
     else:
         return users.get_users(db)
 
 
-@app.get("/user/{user_id}", tags=['Users'], response_model=User)
+@app.get("/user/{user_id}", tags=["Users"], response_model=User)
 def show_user(user_id: UUID, db: Session = Depends(get_db)):
     db_user = users.get_user(db=db, user_id=user_id)
     if db_user is None:
@@ -71,7 +72,7 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
 
 
 @app.put("/user/", response_model=User)
-def update_user(user: UserUpdate = Depends(), name: Optional[str] = None, favorite_tv_show: Optional[str] = None, db: Session = Depends(get_db)):
+def update_user(user: UserUpdate = Depends(), db: Session = Depends(get_db)):
     db_user = users.get_user(db=db, user_id=user.id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
