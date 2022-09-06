@@ -1,5 +1,6 @@
 # 3rd-party Dependencies
 # ----------------------
+from turtle import update
 from uuid import UUID
 from sqlalchemy.orm import Session
 
@@ -34,3 +35,22 @@ def create_user(db: Session, user: UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def delete_user(db: Session, db_user: UserModel):
+    if db_user:
+        db.delete(db_user)  
+        db.commit()
+    return db_user 
+
+
+def update_user(db: Session, db_user: UserModel, update_user: UserUpdate):
+    
+    if db_user.id == update_user.id: 
+        if update_user.name:
+            db_user.name = update_user.name 
+        if update_user.favorite_tv_show:
+            db_user.favorite_tv_show = update_user.favorite_tv_show 
+        db.commit()
+
+    return db_user 
