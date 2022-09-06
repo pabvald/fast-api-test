@@ -55,7 +55,7 @@ def delete_user(db: Session, db_user: UserModel):
     return db_user
 
 
-def modify_user(db: Session, db_user: UserModel, update_user: UserUpdate):
+def update_user(db: Session, db_user: UserModel, update_user: UserUpdate):
     """Modifies a User"""
     if db_user.id != update_user.id:
         raise Exception("the UserUpdate doesn't correspond to the queried User")
