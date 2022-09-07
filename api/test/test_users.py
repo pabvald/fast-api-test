@@ -29,13 +29,6 @@ def is_valid_uuid(value: Any):
 # Tests
 # --------------
 
-# -- Root --
-def test_read_main(test_db):
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"message": "Hello World"}
-
-
 # -- Users --
 def test_list_all_users_empty(test_db):
     response = client.get("/users/")
@@ -207,11 +200,13 @@ def test_update_user_name_tv_show(test_db):
     assert data["name"] == user["name"]
     assert data["favorite_tv_show"] == user["favorite_tv_show"]
 
+
 def test_update_user_not_found(test_db):
     random_id = uuid1()
-    response = client.put("/users/", params={'id': random_id, 'name': 'Jimmy'})
+    response = client.put("/users/", params={"id": random_id, "name": "Jimmy"})
 
     assert response.status_code == 404
+
 
 def test_delete_user(test_db):
     user = {"name": "Charles", "favorite_tv_show": "the_wire"}

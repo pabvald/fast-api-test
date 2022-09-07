@@ -3,8 +3,7 @@
 from database import SessionLocal
 
 
-
-# Dependencies 
+# Dependencies
 # ------------
 def get_db():
     """Obtains the database session"""

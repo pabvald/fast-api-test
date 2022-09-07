@@ -1,7 +1,9 @@
 # Small API 
 
-## Execution
+Author: Pablo Valdunciel
+Date:  07/09/2022
 
+## Execution
 
 ### Command prompt
 
@@ -37,8 +39,16 @@ docker-compose up
 
 The API is available at [localhost:8080/](http://localhost:8080/).
 
+## Testing 
 
-## API Documentation 
+The tests can be found in the `test` folder. To run the tests, execute the following commands:
+
+```bash
+cd api
+python -m pytest ./test/
+```
+
+## Documentation 
 Once the FastAPI app is running, the documentation is available under [localhost/8080/redoc](http://localhost:8080/redoc)
 
 ## Resources 
@@ -46,3 +56,4 @@ Once the FastAPI app is running, the documentation is available under [localhost
 - [FastAPI Tutorial - User Guide](https://fastapi.tiangolo.com/tutorial/)
 - [GUID type with SQLAlchemy](https://fastapi-utils.davidmontague.xyz/user-guide/basics/guid-type/)
 - [Pydantic - Usage - Models](https://pydantic-docs.helpmanual.io/usage/models/)
+- [DB configuration for testing](https://stackoverflow.com/questions/67255653/how-to-set-up-and-tear-down-a-database-between-tests-in-fastapi)
