@@ -30,7 +30,7 @@ The API is available at [localhost:8080/](http://localhost:8080/).
 
 ### Docker 
 
-Execute the following commands. To do so is necessary to have Docker and Docker Compose installed.
+Execute the following commands. To do so, it is necessary to have Docker and Docker Compose installed.
 
 ```bash
 docker-compose build 
@@ -41,7 +41,7 @@ The API is available at [localhost:8080/](http://localhost:8080/).
 
 ## Testing 
 
-The tests can be found in the `test` folder. To run the tests, execute the following commands:
+The tests can be found in the `test/` folder. To run the tests, execute the following commands:
 
 ```bash
 cd api
