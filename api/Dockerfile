@@ -10,4 +10,4 @@ EXPOSE 8080
 
 COPY ./ /code
 
-ENTRYPOINT python api/main.py
+ENTRYPOINT python api/run.py

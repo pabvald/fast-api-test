@@ -21,7 +21,7 @@ Finally, start the FastAPI app.
 
 ```bash
 cd api
-python main.py
+python run.py
 ```
 
 The API is available at [localhost:8080/](http://localhost:8080/).
