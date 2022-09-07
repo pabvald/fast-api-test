@@ -31,9 +31,7 @@ class UserCreate(UserBase):
 
 class UserUpdate(BaseModel):
     """User model for updating"""
-
-    id: UUID
-    name: Optional[str]
+    name: Optional[constr(max_length=50)]
     favorite_tv_show: Optional[TVShow]
 
 

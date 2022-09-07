@@ -57,9 +57,6 @@ def delete_user(db: Session, db_user: UserModel):
 
 def update_user(db: Session, db_user: UserModel, update_user: UserUpdate):
     """Modifies a User"""
-    if db_user.id != update_user.id:
-        raise Exception("the UserUpdate doesn't correspond to the queried User")
-
     if update_user.name:
         db_user.name = update_user.name
     if update_user.favorite_tv_show:

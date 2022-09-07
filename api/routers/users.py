@@ -75,11 +75,11 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
     return users.delete_user(db=db, db_user=db_user)
 
 
-@router.put("/", response_model=User, responses={404: {"model": Message}})
-def update_user(user: UserUpdate = Depends(), db: Session = Depends(get_db)):
-    db_user = users.get_user(db=db, user_id=user.id)
+@router.put("/{user_id}", response_model=User, responses={404: {"model": Message}})
+def update_user(user_id: UUID, update_user: UserUpdate= Depends(), db: Session = Depends(get_db)):
+    db_user = users.get_user(db=db, user_id=user_id)
 
     if db_user is None:
         return JSONResponse(status_code=404, content={"message": "User not found"})
 
-    return users.update_user(db=db, db_user=db_user, update_user=user)
+    return users.update_user(db=db, db_user=db_user, update_user=update_user)

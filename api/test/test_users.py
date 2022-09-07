@@ -132,21 +132,21 @@ def test_update_user_user_name(test_db):
     # create user
     response = client.post("/users/", params=user)
     data = response.json()
-    user["id"] = data["id"]
+    user_id = data["id"]
 
     assert response.status_code == 200
 
     # udpate user's name
     user["name"] = "Tobias Hank"
-    response = client.put("/users/", params=user)
+    response = client.put("/users/{}".format(user_id), params=user)
     data = response.json()
     assert response.status_code == 200
 
     # get user
-    response = client.get("/users/{}".format(user["id"]))
+    response = client.get("/users/{}".format(user_id))
     data = response.json()
     assert response.status_code == 200
-    assert data["id"] == user["id"]
+    assert data["id"] == user_id
     assert data["name"] == user["name"]
     assert data["favorite_tv_show"] == user["favorite_tv_show"]
 
@@ -157,21 +157,21 @@ def test_update_user_tv_show(test_db):
     # create user
     response = client.post("/users/", params=user)
     data = response.json()
-    user["id"] = data["id"]
+    user_id = data["id"]
 
     assert response.status_code == 200
 
     # udpate user's name
     user["favorite_tv_show"] = "breaking_bad"
-    response = client.put("/users/", params=user)
+    response = client.put("/users/{}".format(user_id), params=user)
     data = response.json()
     assert response.status_code == 200
 
     # get user
-    response = client.get("/users/{}".format(user["id"]))
+    response = client.get("/users/{}".format(user_id))
     data = response.json()
     assert response.status_code == 200
-    assert data["id"] == user["id"]
+    assert data["id"] == user_id
     assert data["name"] == user["name"]
     assert data["favorite_tv_show"] == user["favorite_tv_show"]
 
@@ -182,28 +182,28 @@ def test_update_user_name_tv_show(test_db):
     # create user
     response = client.post("/users/", params=user)
     data = response.json()
-    user["id"] = data["id"]
+    user_id = data["id"]
     assert response.status_code == 200
 
     # udpate user's name
     user["name"] = "Ben Junior"
     user["favorite_tv_show"] = "breaking_bad"
-    response = client.put("/users/", params=user)
+    response = client.put("/users/{}".format(user_id), params=user)
     data = response.json()
     assert response.status_code == 200
 
     # get user
-    response = client.get("/users/{}".format(user["id"]))
+    response = client.get("/users/{}".format(user_id))
     data = response.json()
     assert response.status_code == 200
-    assert data["id"] == user["id"]
+    assert data["id"] == user_id
     assert data["name"] == user["name"]
     assert data["favorite_tv_show"] == user["favorite_tv_show"]
 
 
 def test_update_user_not_found(test_db):
     random_id = uuid1()
-    response = client.put("/users/", params={"id": random_id, "name": "Jimmy"})
+    response = client.put("/users/{}".format(random_id), params={"name": "Jimmy"})
 
     assert response.status_code == 404
 
