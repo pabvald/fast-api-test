@@ -15,7 +15,8 @@ from sqlalchemy.orm import Session
 # Local Dependencies
 # ------------------
 from crud import users
-from database import engine, Base, get_db
+from database import engine, Base
+from dependencies import get_db
 from models.message import Message
 from models.user import UserCreate, UserUpdate, User
 from models.tv_show import TVShow
