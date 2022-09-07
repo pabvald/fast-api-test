@@ -12,7 +12,7 @@ from routers.users import router as UsersRouter
 
 tags_metadata = [
     {
-        "name": "Users",
+        "name": "users",
         "description": "Operations with users.",
     }
 ]
