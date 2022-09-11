@@ -11,11 +11,11 @@ Date:  07/09/2022
 2. Including the `TVShow` table. When it comes to representing *Enums* in databases, there are two possibilities:
 
     - Inserting a table containing the possible values of the *Enum* and adding a *foreign key* in the main table.
-    - inserting a *string* column in the main table
+    - Inserting a *string* column in the main table
 
-The decision can be made based on how much space each of the two approaches takes up. In general, it is better to insert an additional table if the *enum* has few values, so the *string* column would have many repetitions. 
+    The decision can be made based on how much space each of the two approaches takes up. In general, it is better to insert an additional table if the *enum* has few values, so the *string* column would have many repetitions. 
 
-In this task, I chose the fastest to implement option, which is to simply insert a *string* column, and ignored the space complexity issue.
+    In this task, I chose the fastest to implement option, which is to simply insert a *string* column, and ignored the space complexity issue.
 
 ## Execution
 
